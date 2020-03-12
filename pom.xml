@@ -2,23 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	
-	<parent>
-        <groupId>com.mycompany</groupId>
-        <artifactId>dummy</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
 	
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mycompany</groupId>
 	<artifactId>dummy</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>dummy child pom</name>
+	<name>dummy</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+         <cloudhub.username>${anypoint.username}</cloudhub.username>
+   		 <cloudhub.password>${anypoint.password}</cloudhub.password>
 		<app.runtime>4.2.2</app.runtime>
 		<mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
 	</properties>
@@ -31,6 +28,19 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+				<cloudHubDeployment>
+      				<uri>https://anypoint.mulesoft.com/</uri>
+					<username>${cloudhub.username}</username>
+      				<password>${cloudhub.password}</password>
+					<environment>Sandbox</environment>
+					<applicationName>dummy</applicationName>
+      				<muleVersion>4.2.2</muleVersion>
+      				<businessGroup>Accenture</businessGroup>
+					<region>us-east-1</region>
+      				<workers>1</workers>
+      				<workerType>Micro</workerType>
+					<objectStoreV2>true</objectStoreV2>
+				</cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -76,5 +86,10 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
+	<distributionManagement>
+        <repository>
+            <id>nexus-credentials</id>
+            <url>http://localhost:8081/repository/Test_Nexus_repository/</url>
+        </repository>
+    </distributionManagement>
 </project>
